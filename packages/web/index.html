@@ -7,7 +7,8 @@
   <meta name="description" content="收集散落在互联网的每一束实用之光">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css">
+  <!-- 改用国内 CDN -->
+  <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/remixicon/2.5.0/remixicon.min.css">
 </head>
 <body>
   <!-- 域名跳转提示 -->
@@ -42,7 +43,7 @@
   <!-- 主内容 -->
   <main class="container main-content">
     <!-- Hero 区 -->
-    <div class="hero fade-in">
+    <div class="hero fade-in-up">
       <h1 class="hero-title">
         <i class="ri-flashlight-line"></i>
         拾光工具箱
@@ -56,7 +57,7 @@
 
     <!-- 工具分类 -->
     <div class="categories">
-      <div class="category-card" data-category="text">
+      <div class="category-card fade-in-up" data-category="text">
         <div class="category-icon">
           <i class="ri-file-text-line"></i>
         </div>
@@ -64,7 +65,7 @@
         <p class="tool-count">12 个工具</p>
       </div>
 
-      <div class="category-card" data-category="dev">
+      <div class="category-card fade-in-up" data-category="dev">
         <div class="category-icon">
           <i class="ri-code-box-line"></i>
         </div>
@@ -72,7 +73,7 @@
         <p class="tool-count">15 个工具</p>
       </div>
 
-      <div class="category-card" data-category="image">
+      <div class="category-card fade-in-up" data-category="image">
         <div class="category-icon">
           <i class="ri-image-line"></i>
         </div>
@@ -80,7 +81,7 @@
         <p class="tool-count">7 个工具</p>
       </div>
 
-      <div class="category-card" data-category="design">
+      <div class="category-card fade-in-up" data-category="design">
         <div class="category-icon">
           <i class="ri-palette-line"></i>
         </div>
@@ -88,7 +89,7 @@
         <p class="tool-count">8 个工具</p>
       </div>
 
-      <div class="category-card" data-category="query">
+      <div class="category-card fade-in-up" data-category="query">
         <div class="category-icon">
           <i class="ri-search-eye-line"></i>
         </div>
@@ -96,7 +97,7 @@
         <p class="tool-count">10 个工具</p>
       </div>
 
-      <div class="category-card" data-category="ai">
+      <div class="category-card fade-in-up" data-category="ai">
         <div class="category-icon">
           <i class="ri-robot-line"></i>
         </div>
@@ -107,12 +108,12 @@
 
     <!-- 热门工具 -->
     <section class="tools-section">
-      <h2 class="section-title">
+      <h2 class="section-title fade-in-up">
         <i class="ri-fire-line"></i>
         热门工具
       </h2>
       <div class="tools-grid" id="hotTools">
-        <a href="/tools/json-formatter.html" class="tool-card">
+        <a href="/tools/json-formatter.html" class="tool-card fade-in-up">
           <div class="tool-icon">
             <i class="ri-braces-line"></i>
           </div>
@@ -120,7 +121,7 @@
           <p>格式化、压缩、验证 JSON</p>
         </a>
 
-        <a href="/tools/timestamp.html" class="tool-card">
+        <a href="/tools/timestamp.html" class="tool-card fade-in-up">
           <div class="tool-icon">
             <i class="ri-time-line"></i>
           </div>
@@ -128,7 +129,7 @@
           <p>时间戳与日期互转</p>
         </a>
 
-        <a href="/tools/base64.html" class="tool-card">
+        <a href="/tools/base64.html" class="tool-card fade-in-up">
           <div class="tool-icon">
             <i class="ri-key-2-line"></i>
           </div>
@@ -136,7 +137,7 @@
           <p>文本与 Base64 互转</p>
         </a>
 
-        <a href="/tools/color-converter.html" class="tool-card">
+        <a href="/tools/color-converter.html" class="tool-card fade-in-up">
           <div class="tool-icon">
             <i class="ri-contrast-drop-line"></i>
           </div>
@@ -144,7 +145,7 @@
           <p>HEX/RGB/HSL 互转</p>
         </a>
 
-        <a href="/tools/qrcode.html" class="tool-card">
+        <a href="/tools/qrcode.html" class="tool-card fade-in-up">
           <div class="tool-icon">
             <i class="ri-qr-code-line"></i>
           </div>
@@ -152,7 +153,7 @@
           <p>生成/识别二维码</p>
         </a>
 
-        <a href="/tools/hash.html" class="tool-card">
+        <a href="/tools/hash.html" class="tool-card fade-in-up">
           <div class="tool-icon">
             <i class="ri-hashtag"></i>
           </div>
@@ -164,7 +165,7 @@
   </main>
 
   <!-- 页脚 -->
-  <footer class="footer">
+  <footer class="footer fade-in-up">
     <div class="container">
       <p>&copy; 2024 拾光工具箱 LumiBox. All rights reserved.</p>
       <p class="beian-link">

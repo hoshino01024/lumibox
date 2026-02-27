@@ -51,70 +51,39 @@ function checkDomain() {
   
   if (hostname.includes('pages.dev') && !localStorage.getItem('hideDomainTip')) {
     domainTip.style.display = 'block';
-    setTimeout(() => {
-      domainTip.classList.add('visible');
-    }, 100);
   }
 }
 
 function closeDomainTip() {
   const domainTip = document.getElementById('domainTip');
   if (domainTip) {
-    domainTip.classList.remove('visible');
-    setTimeout(() => {
-      domainTip.style.display = 'none';
-    }, 500);
+    domainTip.style.display = 'none';
     localStorage.setItem('hideDomainTip', 'true');
   }
 }
 
-// 淡入动画
-function initFadeIn() {
-  // Hero 区域立即显示
-  const hero = document.querySelector('.hero');
-  if (hero) {
-    setTimeout(() => {
-      hero.classList.add('visible');
-    }, 100);
-  }
-
-  // 分类卡片依次淡入
-  const categoryCards = document.querySelectorAll('.category-card');
-  categoryCards.forEach((card, index) => {
-    setTimeout(() => {
-      card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-      card.classList.add('visible');
-    }, 300 + index * 100);
+// 滚动淡入效果（Intersection Observer）
+function initScrollAnimation() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // 添加延迟，让同一批元素依次出现
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 100);
+        
+        // 已经显示的元素不再观察
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1, // 元素 10% 可见时触发
+    rootMargin: '0px 0px -50px 0px' // 提前 50px 触发
   });
 
-  // 热门工具标题
-  const sectionTitle = document.querySelector('.section-title');
-  if (sectionTitle) {
-    sectionTitle.style.opacity = '0';
-    sectionTitle.style.transform = 'translateY(20px)';
-    sectionTitle.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-    setTimeout(() => {
-      sectionTitle.style.opacity = '1';
-      sectionTitle.style.transform = 'translateY(0)';
-    }, 800);
-  }
-
-  // 工具卡片依次淡入
-  const toolCards = document.querySelectorAll('.tool-card');
-  toolCards.forEach((card, index) => {
-    setTimeout(() => {
-      card.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
-      card.classList.add('visible');
-    }, 1000 + index * 80);
-  });
-
-  // 页脚
-  const footer = document.querySelector('.footer');
-  if (footer) {
-    setTimeout(() => {
-      footer.classList.add('visible');
-    }, 1500);
-  }
+  // 观察所有需要淡入的元素
+  const elements = document.querySelectorAll('.fade-in-up');
+  elements.forEach(el => observer.observe(el));
 }
 
 // 初始化
@@ -122,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initSearch();
   checkDomain();
-  initFadeIn();
+  initScrollAnimation();
   
   const themeBtn = document.getElementById('themeToggle');
   if (themeBtn) {
