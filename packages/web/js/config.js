@@ -62,26 +62,27 @@ function closeDomainTip() {
   }
 }
 
-// 滚动淡入效果（Intersection Observer）
+// 滚动淡入效果
 function initScrollAnimation() {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+      el.classList.add('visible');
+    });
+    return;
+  }
+
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // 添加延迟，让同一批元素依次出现
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, index * 100);
-        
-        // 已经显示的元素不再观察
+        entry.target.classList.add('visible');
         observer.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.1, // 元素 10% 可见时触发
-    rootMargin: '0px 0px -50px 0px' // 提前 50px 触发
+    threshold: 0.1,
+    rootMargin: '0px 0px -80px 0px'
   });
 
-  // 观察所有需要淡入的元素
   const elements = document.querySelectorAll('.fade-in-up');
   elements.forEach(el => observer.observe(el));
 }
