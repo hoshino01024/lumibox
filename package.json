@@ -1,0 +1,12 @@
+{
+  "name": "lumibox",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler pages dev packages/web --port 8788",
+    "deploy": "wrangler pages deploy packages/web"
+  },
+  "devDependencies": {
+    "wrangler": "^3.80.0"
+  }
+}

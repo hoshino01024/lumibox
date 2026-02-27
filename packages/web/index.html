@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拾光工具箱 - LumiBox</title>
+  <meta name="description" content="收集散落在互联网的每一束实用之光">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="nav-glass">
+    <div class="container">
+      <div class="nav-content">
+        <div class="logo">
+          <i class="ri-box-3-line"></i>
+          <span>拾光工具箱</span>
+        </div>
+        <div class="nav-right">
+          <button id="themeToggle" class="icon-btn">
+            <i class="ri-moon-line"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主内容 -->
+  <main class="container main-content">
+    <!-- Hero 区 -->
+    <div class="hero">
+      <h1 class="hero-title">
+        <i class="ri-flashlight-line"></i>
+        拾光工具箱
+      </h1>
+      <p class="hero-desc">收集散落在互联网的每一束实用之光</p>
+      <div class="search-box">
+        <i class="ri-search-line"></i>
+        <input type="text" id="searchInput" placeholder="搜索工具...">
+      </div>
+    </div>
+
+    <!-- 工具分类 -->
+    <div class="categories">
+      <div class="category-card" data-category="text">
+        <div class="category-icon">📝</div>
+        <h3>文本工具</h3>
+        <p class="tool-count">12 个工具</p>
+      </div>
+
+      <div class="category-card" data-category="dev">
+        <div class="category-icon">💻</div>
+        <h3>开发工具</h3>
+        <p class="tool-count">15 个工具</p>
+      </div>
+
+      <div class="category-card" data-category="image">
+        <div class="category-icon">🖼️</div>
+        <h3>图片工具</h3>
+        <p class="tool-count">7 个工具</p>
+      </div>
+
+      <div class="category-card" data-category="design">
+        <div class="category-icon">🎨</div>
+        <h3>设计工具</h3>
+        <p class="tool-count">8 个工具</p>
+      </div>
+
+      <div class="category-card" data-category="query">
+        <div class="category-icon">🔍</div>
+        <h3>查询工具</h3>
+        <p class="tool-count">10 个工具</p>
+      </div>
+
+      <div class="category-card" data-category="ai">
+        <div class="category-icon">🤖</div>
+        <h3>AI 工具</h3>
+        <p class="tool-count">5 个工具</p>
+      </div>
+    </div>
+
+    <!-- 热门工具 -->
+    <section class="tools-section">
+      <h2 class="section-title">
+        <i class="ri-fire-line"></i>
+        热门工具
+      </h2>
+      <div class="tools-grid" id="hotTools">
+        <a href="/tools/json-formatter.html" class="tool-card">
+          <div class="tool-icon">{ }</div>
+          <h3>JSON 格式化</h3>
+          <p>格式化、压缩、验证 JSON</p>
+        </a>
+
+        <a href="/tools/timestamp.html" class="tool-card">
+          <div class="tool-icon">🕒</div>
+          <h3>时间戳转换</h3>
+          <p>时间戳与日期互转</p>
+        </a>
+
+        <a href="/tools/base64.html" class="tool-card">
+          <div class="tool-icon">🔤</div>
+          <h3>Base64 编解码</h3>
+          <p>文本与 Base64 互转</p>
+        </a>
+
+        <a href="/tools/color-converter.html" class="tool-card">
+          <div class="tool-icon">🎨</div>
+          <h3>颜色转换器</h3>
+          <p>HEX/RGB/HSL 互转</p>
+        </a>
+
+        <a href="/tools/qrcode.html" class="tool-card">
+          <div class="tool-icon">📱</div>
+          <h3>二维码生成</h3>
+          <p>生成/识别二维码</p>
+        </a>
+
+        <a href="/tools/hash.html" class="tool-card">
+          <div class="tool-icon">#</div>
+          <h3>Hash 计算</h3>
+          <p>MD5/SHA1/SHA256</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 拾光工具箱 LumiBox. All rights reserved.</p>
+      <p>
+        <a href="https://github.com/hoshino01024/lumibox" target="_blank">
+          <i class="ri-github-fill"></i> GitHub
+        </a>
+        <span style="margin: 0 1rem;">|</span>
+        <a href="https://beian.miit.gov.cn/" target="_blank">备案号待填写</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="/js/config.js"></script>
+</body>
+</html>
