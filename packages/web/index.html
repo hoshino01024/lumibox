@@ -42,7 +42,7 @@
   <!-- 主内容 -->
   <main class="container main-content">
     <!-- Hero 区 -->
-    <div class="hero">
+    <div class="hero fade-in">
       <h1 class="hero-title">
         <i class="ri-flashlight-line"></i>
         拾光工具箱
@@ -55,83 +55,107 @@
     </div>
 
     <!-- 工具分类 -->
-    <div class="categories">
+    <div class="categories fade-in">
       <div class="category-card" data-category="text">
-        <div class="category-icon">📝</div>
+        <div class="category-icon">
+          <i class="ri-file-text-line"></i>
+        </div>
         <h3>文本工具</h3>
         <p class="tool-count">12 个工具</p>
       </div>
 
       <div class="category-card" data-category="dev">
-        <div class="category-icon">💻</div>
+        <div class="category-icon">
+          <i class="ri-code-box-line"></i>
+        </div>
         <h3>开发工具</h3>
         <p class="tool-count">15 个工具</p>
       </div>
 
       <div class="category-card" data-category="image">
-        <div class="category-icon">🖼️</div>
+        <div class="category-icon">
+          <i class="ri-image-line"></i>
+        </div>
         <h3>图片工具</h3>
         <p class="tool-count">7 个工具</p>
       </div>
 
       <div class="category-card" data-category="design">
-        <div class="category-icon">🎨</div>
+        <div class="category-icon">
+          <i class="ri-palette-line"></i>
+        </div>
         <h3>设计工具</h3>
         <p class="tool-count">8 个工具</p>
       </div>
 
       <div class="category-card" data-category="query">
-        <div class="category-icon">🔍</div>
+        <div class="category-icon">
+          <i class="ri-search-line"></i>
+        </div>
         <h3>查询工具</h3>
         <p class="tool-count">10 个工具</p>
       </div>
 
       <div class="category-card" data-category="ai">
-        <div class="category-icon">🤖</div>
+        <div class="category-icon">
+          <i class="ri-robot-line"></i>
+        </div>
         <h3>AI 工具</h3>
         <p class="tool-count">5 个工具</p>
       </div>
     </div>
 
     <!-- 热门工具 -->
-    <section class="tools-section">
+    <section class="tools-section fade-in">
       <h2 class="section-title">
         <i class="ri-fire-line"></i>
         热门工具
       </h2>
       <div class="tools-grid" id="hotTools">
         <a href="/tools/json-formatter.html" class="tool-card">
-          <div class="tool-icon">{ }</div>
+          <div class="tool-icon">
+            <i class="ri-braces-line"></i>
+          </div>
           <h3>JSON 格式化</h3>
           <p>格式化、压缩、验证 JSON</p>
         </a>
 
         <a href="/tools/timestamp.html" class="tool-card">
-          <div class="tool-icon">🕒</div>
+          <div class="tool-icon">
+            <i class="ri-time-line"></i>
+          </div>
           <h3>时间戳转换</h3>
           <p>时间戳与日期互转</p>
         </a>
 
         <a href="/tools/base64.html" class="tool-card">
-          <div class="tool-icon">🔤</div>
+          <div class="tool-icon">
+            <i class="ri-key-2-line"></i>
+          </div>
           <h3>Base64 编解码</h3>
           <p>文本与 Base64 互转</p>
         </a>
 
         <a href="/tools/color-converter.html" class="tool-card">
-          <div class="tool-icon">🎨</div>
+          <div class="tool-icon">
+            <i class="ri-contrast-drop-line"></i>
+          </div>
           <h3>颜色转换器</h3>
           <p>HEX/RGB/HSL 互转</p>
         </a>
 
         <a href="/tools/qrcode.html" class="tool-card">
-          <div class="tool-icon">📱</div>
+          <div class="tool-icon">
+            <i class="ri-qr-code-line"></i>
+          </div>
           <h3>二维码生成</h3>
           <p>生成/识别二维码</p>
         </a>
 
         <a href="/tools/hash.html" class="tool-card">
-          <div class="tool-icon">#</div>
+          <div class="tool-icon">
+            <i class="ri-hashtag"></i>
+          </div>
           <h3>Hash 计算</h3>
           <p>MD5/SHA1/SHA256</p>
         </a>
@@ -142,20 +166,12 @@
   <!-- 页脚 -->
   <footer class="footer">
     <div class="container">
-      <p>&copy; 2026 拾光工具箱 LumiBox. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="https://github.com/hoshino01024/lumibox" target="_blank" rel="noopener">
-          <i class="ri-github-fill"></i> GitHub
-        </a>
-        <span class="divider">|</span>
+      <p>&copy; 2024 拾光工具箱 LumiBox. All rights reserved.</p>
+      <p class="beian-link">
         <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">
           <i class="ri-government-line"></i> 沪ICP备2023019171号-2
         </a>
-        <span class="divider">|</span>
-        <a href="https://box.52eh.com" class="primary-domain">
-          <i class="ri-global-line"></i> 主域名访问
-        </a>
-      </div>
+      </p>
     </div>
   </footer>
 
