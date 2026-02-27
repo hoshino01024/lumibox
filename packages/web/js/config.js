@@ -49,17 +49,71 @@ function checkDomain() {
   
   if (!domainTip) return;
   
-  // 如果是 pages.dev 域名，且用户没有关闭过提示
   if (hostname.includes('pages.dev') && !localStorage.getItem('hideDomainTip')) {
     domainTip.style.display = 'block';
+    setTimeout(() => {
+      domainTip.classList.add('visible');
+    }, 100);
   }
 }
 
 function closeDomainTip() {
   const domainTip = document.getElementById('domainTip');
   if (domainTip) {
-    domainTip.style.display = 'none';
+    domainTip.classList.remove('visible');
+    setTimeout(() => {
+      domainTip.style.display = 'none';
+    }, 500);
     localStorage.setItem('hideDomainTip', 'true');
+  }
+}
+
+// 淡入动画
+function initFadeIn() {
+  // Hero 区域立即显示
+  const hero = document.querySelector('.hero');
+  if (hero) {
+    setTimeout(() => {
+      hero.classList.add('visible');
+    }, 100);
+  }
+
+  // 分类卡片依次淡入
+  const categoryCards = document.querySelectorAll('.category-card');
+  categoryCards.forEach((card, index) => {
+    setTimeout(() => {
+      card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      card.classList.add('visible');
+    }, 300 + index * 100);
+  });
+
+  // 热门工具标题
+  const sectionTitle = document.querySelector('.section-title');
+  if (sectionTitle) {
+    sectionTitle.style.opacity = '0';
+    sectionTitle.style.transform = 'translateY(20px)';
+    sectionTitle.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+    setTimeout(() => {
+      sectionTitle.style.opacity = '1';
+      sectionTitle.style.transform = 'translateY(0)';
+    }, 800);
+  }
+
+  // 工具卡片依次淡入
+  const toolCards = document.querySelectorAll('.tool-card');
+  toolCards.forEach((card, index) => {
+    setTimeout(() => {
+      card.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+      card.classList.add('visible');
+    }, 1000 + index * 80);
+  });
+
+  // 页脚
+  const footer = document.querySelector('.footer');
+  if (footer) {
+    setTimeout(() => {
+      footer.classList.add('visible');
+    }, 1500);
   }
 }
 
@@ -68,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initSearch();
   checkDomain();
+  initFadeIn();
   
   const themeBtn = document.getElementById('themeToggle');
   if (themeBtn) {
