@@ -42,10 +42,32 @@ function initSearch() {
   });
 }
 
+// 域名跳转提示
+function checkDomain() {
+  const hostname = window.location.hostname;
+  const domainTip = document.getElementById('domainTip');
+  
+  if (!domainTip) return;
+  
+  // 如果是 pages.dev 域名，且用户没有关闭过提示
+  if (hostname.includes('pages.dev') && !localStorage.getItem('hideDomainTip')) {
+    domainTip.style.display = 'block';
+  }
+}
+
+function closeDomainTip() {
+  const domainTip = document.getElementById('domainTip');
+  if (domainTip) {
+    domainTip.style.display = 'none';
+    localStorage.setItem('hideDomainTip', 'true');
+  }
+}
+
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initSearch();
+  checkDomain();
   
   const themeBtn = document.getElementById('themeToggle');
   if (themeBtn) {

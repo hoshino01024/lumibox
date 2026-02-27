@@ -10,6 +10,18 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css">
 </head>
 <body>
+  <!-- 域名跳转提示（仅在 pages.dev 域名显示） -->
+  <div id="domainTip" class="domain-tip" style="display: none;">
+    <div class="container">
+      <i class="ri-information-line"></i>
+      <span>为了更好的访问体验，建议使用备案域名：</span>
+      <a href="https://box.52eh.com" class="domain-link">box.52eh.com</a>
+      <button onclick="closeDomainTip()" class="close-btn">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+  </div>
+
   <!-- 导航栏 -->
   <nav class="nav-glass">
     <div class="container">
@@ -19,7 +31,7 @@
           <span>拾光工具箱</span>
         </div>
         <div class="nav-right">
-          <button id="themeToggle" class="icon-btn">
+          <button id="themeToggle" class="icon-btn" title="切换主题">
             <i class="ri-moon-line"></i>
           </button>
         </div>
@@ -130,14 +142,20 @@
   <!-- 页脚 -->
   <footer class="footer">
     <div class="container">
-      <p>&copy; 2024 拾光工具箱 LumiBox. All rights reserved.</p>
-      <p>
-        <a href="https://github.com/hoshino01024/lumibox" target="_blank">
+      <p>&copy; 2026 拾光工具箱 LumiBox. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://github.com/hoshino01024/lumibox" target="_blank" rel="noopener">
           <i class="ri-github-fill"></i> GitHub
         </a>
-        <span style="margin: 0 1rem;">|</span>
-        <a href="https://beian.miit.gov.cn/" target="_blank">备案号待填写</a>
-      </p>
+        <span class="divider">|</span>
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">
+          <i class="ri-government-line"></i> 沪ICP备2023019171号-2
+        </a>
+        <span class="divider">|</span>
+        <a href="https://box.52eh.com" class="primary-domain">
+          <i class="ri-global-line"></i> 主域名访问
+        </a>
+      </div>
     </div>
   </footer>
 
