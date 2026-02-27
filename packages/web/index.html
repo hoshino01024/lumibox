@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>拾光工具箱 - LumiBox</title>
   <meta name="description" content="收集散落在互联网的每一束实用之光">
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <!-- 域名跳转提示 -->
-  <div id="domainTip" class="domain-tip" style="display: none;">
+  <!-- 域名提示 -->
+  <div id="domainTip" class="domain-tip" style="display:none">
     <div class="container">
-      <svg class="icon" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-11v6h2v-6h-2zm0-4v2h2V7h-2z"/></svg>
-      <span>建议使用备案域名访问：</span>
+      <span>建议使用备案域名：</span>
       <a href="https://box.52eh.com" class="domain-link">box.52eh.com</a>
       <button onclick="closeDomainTip()" class="close-btn">
         <svg class="icon" viewBox="0 0 24 24"><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></svg>
@@ -21,24 +19,23 @@
     </div>
   </div>
 
-  <!-- 导航栏 -->
-  <nav class="nav-glass">
+  <!-- 导航 -->
+  <nav class="nav">
     <div class="container">
       <div class="nav-content">
-        <div class="logo">
+        <a href="/" class="logo">
           <svg class="icon" viewBox="0 0 24 24"><path d="M20.083 15.2l1.202.721a.5.5 0 0 1 0 .858l-8.77 5.262a1 1 0 0 1-1.03 0l-8.77-5.262a.5.5 0 0 1 0-.858l1.202-.721L12 20.05l8.083-4.85zm0-4.7l1.202.721a.5.5 0 0 1 0 .858L12 17.65l-9.285-5.571a.5.5 0 0 1 0-.858l1.202-.721L12 15.35l8.083-4.85zm-7.569-9.191l8.771 5.262a.5.5 0 0 1 0 .858L12 13 2.715 7.429a.5.5 0 0 1 0-.858l8.77-5.262a1 1 0 0 1 1.03 0z"/></svg>
           <span>拾光工具箱</span>
-        </div>
-        <button id="themeToggle" class="icon-btn" title="切换主题">
-          <svg id="themeIcon" class="icon" viewBox="0 0 24 24"><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></svg>
+        </a>
+        <button id="themeToggle" class="theme-btn" title="切换主题">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7z"/></svg>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- 主内容 -->
-  <main class="container main-content">
-    <!-- Hero 区 -->
+  <main class="container">
+    <!-- Hero -->
     <div class="hero fade-up">
       <h1 class="hero-title">
         <svg class="icon" viewBox="0 0 24 24"><path d="M13 10h7l-9 13v-9H4l9-13z"/></svg>
@@ -51,54 +48,37 @@
       </div>
     </div>
 
-    <!-- 工具分类 -->
+    <!-- 分类 -->
     <div class="categories">
       <div class="category-card fade-up delay-1">
-        <div class="category-icon">
-          <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M20 22H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1zm-1-2V4H5v16h14zM7 6h4v4H7V6zm0 6h10v2H7v-2zm0 4h10v2H7v-2zm6-9h4v2h-4V7z"/></svg>
-        </div>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M20 22H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1zm-1-2V4H5v16h14zM7 6h4v4H7V6zm0 6h10v2H7v-2zm0 4h10v2H7v-2zm6-9h4v2h-4V7z"/></svg>
         <h3>文本工具</h3>
-        <p class="tool-count">12 个工具</p>
+        <p>12 个工具</p>
       </div>
-
       <div class="category-card fade-up delay-2">
-        <div class="category-icon">
-          <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M24 12l-5.657 5.657-1.414-1.414L21.172 12l-4.243-4.243 1.414-1.414L24 12zM2.828 12l4.243 4.243-1.414 1.414L0 12l5.657-5.657L7.07 7.757 2.828 12zm6.96 9H7.66l6.552-18h2.128L9.788 21z"/></svg>
-        </div>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M24 12l-5.657 5.657-1.414-1.414L21.172 12l-4.243-4.243 1.414-1.414L24 12zM2.828 12l4.243 4.243-1.414 1.414L0 12l5.657-5.657L7.07 7.757 2.828 12zm6.96 9H7.66l6.552-18h2.128L9.788 21z"/></svg>
         <h3>开发工具</h3>
-        <p class="tool-count">15 个工具</p>
+        <p>15 个工具</p>
       </div>
-
       <div class="category-card fade-up delay-3">
-        <div class="category-icon">
-          <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M4.828 21l-.02.02-.021-.02H2.992A.993.993 0 0 1 2 20.007V3.993A1 1 0 0 1 2.992 3h18.016c.548 0 .992.445.992.993v16.014a1 1 0 0 1-.992.993H4.828zM20 15V5H4v10h16zm0 2H4v2h16v-2zM6 7h8v6H6V7zm2 2v2h4V9H8zm-2 8h2v1H6v-1zm4 0h8v1h-8v-1z"/></svg>
-        </div>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4.828 21l-.02.02-.021-.02H2.992A.993.993 0 0 1 2 20.007V3.993A1 1 0 0 1 2.992 3h18.016c.548 0 .992.445.992.993v16.014a1 1 0 0 1-.992.993H4.828zM20 15V5H4v10h16zm0 2H4v2h16v-2zM6 7h8v6H6V7z"/></svg>
         <h3>图片工具</h3>
-        <p class="tool-count">7 个工具</p>
+        <p>7 个工具</p>
       </div>
-
       <div class="category-card fade-up delay-4">
-        <div class="category-icon">
-          <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M12 2c5.522 0 10 3.978 10 8.889a5.558 5.558 0 0 1-5.556 5.555h-1.966c-.922 0-1.667.745-1.667 1.667 0 .422.167.811.422 1.1.267.3.434.689.434 1.122C13.667 21.256 12.9 22 12 22 6.478 22 2 17.522 2 12S6.478 2 12 2zM7.5 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM12 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
-        </div>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2c5.522 0 10 3.978 10 8.889a5.558 5.558 0 0 1-5.556 5.555h-1.966c-.922 0-1.667.745-1.667 1.667 0 .422.167.811.422 1.1.267.3.434.689.434 1.122C13.667 21.256 12.9 22 12 22 6.478 22 2 17.522 2 12S6.478 2 12 2zM7.5 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM12 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
         <h3>设计工具</h3>
-        <p class="tool-count">8 个工具</p>
+        <p>8 个工具</p>
       </div>
-
       <div class="category-card fade-up delay-5">
-        <div class="category-icon">
-          <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/></svg>
-        </div>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617z"/></svg>
         <h3>查询工具</h3>
-        <p class="tool-count">10 个工具</p>
+        <p>10 个工具</p>
       </div>
-
       <div class="category-card fade-up delay-6">
-        <div class="category-icon">
-          <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M13 4.055c4.5.497 8 4.312 8 8.945v9H3v-9c0-4.633 3.5-8.448 8-8.945V2h2v2.055zM12 18a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-2a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
-        </div>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M13 4.055c4.5.497 8 4.312 8 8.945v9H3v-9c0-4.633 3.5-8.448 8-8.945V2h2v2.055zM12 18a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
         <h3>AI 工具</h3>
-        <p class="tool-count">5 个工具</p>
+        <p>5 个工具</p>
       </div>
     </div>
 
@@ -110,51 +90,46 @@
       </h2>
       <div class="tools-grid">
         <a href="/tools/json-formatter.html" class="tool-card fade-up delay-1">
-          <div class="tool-icon">
-            <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M4 18v-3.7a1.5 1.5 0 0 0-1.5-1.5H2v-1.6h.5A1.5 1.5 0 0 0 4 9.7V6c0-1.1.9-2 2-2h3v2H6v4.2c0 .9-.6 1.6-1.4 1.8.8.2 1.4 1 1.4 1.8V18h3v2H6c-1.1 0-2-.9-2-2zm16 0v-3.7a1.5 1.5 0 0 1 1.5-1.5h.5v-1.6h-.5a1.5 1.5 0 0 1-1.5-1.5V6c0-1.1-.9-2-2-2h-3v2h3v4.2c0 .9.6 1.6 1.4 1.8-.8.2-1.4 1-1.4 1.8V18h-3v2h3c1.1 0 2-.9 2-2z"/></svg>
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 18v-3.7a1.5 1.5 0 0 0-1.5-1.5H2v-1.6h.5A1.5 1.5 0 0 0 4 9.7V6c0-1.1.9-2 2-2h3v2H6v4.2c0 .9-.6 1.6-1.4 1.8.8.2 1.4 1 1.4 1.8V18h3v2H6c-1.1 0-2-.9-2-2zm16 0v-3.7a1.5 1.5 0 0 1 1.5-1.5h.5v-1.6h-.5a1.5 1.5 0 0 1-1.5-1.5V6c0-1.1-.9-2-2-2h-3v2h3v4.2c0 .9.6 1.6 1.4 1.8-.8.2-1.4 1-1.4 1.8V18h-3v2h3c1.1 0 2-.9 2-2z"/></svg>
+          <div class="tool-info">
+            <h3>JSON 格式化</h3>
+            <p>格式化、压缩、验证 JSON 数据</p>
           </div>
-          <h3>JSON 格式化</h3>
-          <p>格式化、压缩、验证 JSON 数据</p>
         </a>
-
         <a href="/tools/timestamp.html" class="tool-card fade-up delay-2">
-          <div class="tool-icon">
-            <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-8h4v2h-6V7h2v5z"/></svg>
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-8h4v2h-6V7h2v5z"/></svg>
+          <div class="tool-info">
+            <h3>时间戳转换</h3>
+            <p>时间戳与日期格式互转</p>
           </div>
-          <h3>时间戳转换</h3>
-          <p>时间戳与日期格式互转</p>
         </a>
-
         <a href="/tools/base64.html" class="tool-card fade-up delay-3">
-          <div class="tool-icon">
-            <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M18 8h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2V7a6 6 0 1 1 12 0v1zM5 10v10h14V10H5zm6 4h2v2h-2v-2zm-4 0h2v2H7v-2zm8 0h2v2h-2v-2zm1-6V7a4 4 0 1 0-8 0v1h8z"/></svg>
+          <svg class="icon" viewBox="0 0 24 24"><path d="M18 8h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2V7a6 6 0 1 1 12 0v1zm-2 0V7a4 4 0 1 0-8 0v1h8zm-5 6v2h2v-2h-2zm-4 0v2h2v-2H7zm8 0v2h2v-2h-2z"/></svg>
+          <div class="tool-info">
+            <h3>Base64 编解码</h3>
+            <p>文本与 Base64 格式互转</p>
           </div>
-          <h3>Base64 编解码</h3>
-          <p>文本与 Base64 格式互转</p>
         </a>
-
         <a href="/tools/color-converter.html" class="tool-card fade-up delay-4">
-          <div class="tool-icon">
-            <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M12 2c5.522 0 10 3.978 10 8.889a5.558 5.558 0 0 1-5.556 5.555h-1.966c-.922 0-1.667.745-1.667 1.667 0 .422.167.811.422 1.1.267.3.434.689.434 1.122C13.667 21.256 12.9 22 12 22 6.478 22 2 17.522 2 12S6.478 2 12 2z"/></svg>
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 2c5.522 0 10 3.978 10 8.889a5.558 5.558 0 0 1-5.556 5.555h-1.966c-.922 0-1.667.745-1.667 1.667 0 .422.167.811.422 1.1.267.3.434.689.434 1.122C13.667 21.256 12.9 22 12 22 6.478 22 2 17.522 2 12S6.478 2 12 2z"/></svg>
+          <div class="tool-info">
+            <h3>颜色转换器</h3>
+            <p>HEX / RGB / HSL 互转</p>
           </div>
-          <h3>颜色转换器</h3>
-          <p>HEX / RGB / HSL 互转</p>
         </a>
-
         <a href="/tools/qrcode.html" class="tool-card fade-up delay-5">
-          <div class="tool-icon">
-            <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M16 17v-1h-3v-3h3v2h2v2h-1v2h-2v2h-2v-3h2v-1h1zm5 4h-4v-2h2v-2h2v4zM3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zM6 6h2v2H6V6zm0 10h2v2H6v-2zM16 6h2v2h-2V6z"/></svg>
+          <svg class="icon" viewBox="0 0 24 24"><path d="M16 17v-1h-3v-3h3v2h2v2h-1v2h-2v2h-2v-3h2v-1h1zm5 4h-4v-2h2v-2h2v4zM3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5z"/></svg>
+          <div class="tool-info">
+            <h3>二维码生成</h3>
+            <p>生成和识别二维码</p>
           </div>
-          <h3>二维码生成</h3>
-          <p>生成和识别二维码</p>
         </a>
-
         <a href="/tools/hash.html" class="tool-card fade-up delay-6">
-          <div class="tool-icon">
-            <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M7.784 14l.42-4H4V8h4.415l.525-5h2.011l-.525 5h3.989l.525-5h2.011l-.525 5H20v2h-3.784l-.42 4H20v2h-4.415l-.525 5h-2.011l.525-5H9.585l-.525 5H7.049l.525-5H4v-2h3.784zm2.011 0h3.99l.42-4h-3.99l-.42 4z"/></svg>
+          <svg class="icon" viewBox="0 0 24 24"><path d="M7.784 14l.42-4H4V8h4.415l.525-5h2.011l-.525 5h3.989l.525-5h2.011l-.525 5H20v2h-3.784l-.42 4H20v2h-4.415l-.525 5h-2.011l.525-5H9.585l-.525 5H7.049l.525-5H4v-2h3.784zm2.011 0h3.99l.42-4h-3.99l-.42 4z"/></svg>
+          <div class="tool-info">
+            <h3>Hash 计算</h3>
+            <p>MD5 / SHA1 / SHA256</p>
           </div>
-          <h3>Hash 计算</h3>
-          <p>MD5 / SHA1 / SHA256</p>
         </a>
       </div>
     </section>
@@ -162,14 +137,8 @@
 
   <!-- 页脚 -->
   <footer class="footer fade-up">
-    <div class="container">
-      <p>&copy; 2024 拾光工具箱 LumiBox</p>
-      <p class="beian-link">
-        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">
-          沪ICP备2023019171号-2
-        </a>
-      </p>
-    </div>
+    <p>&copy; 2024 拾光工具箱 LumiBox</p>
+    <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">沪ICP备2023019171号-2</a></p>
   </footer>
 
   <script src="/js/config.js"></script>
