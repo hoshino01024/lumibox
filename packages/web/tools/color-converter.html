@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>颜色转换器 - 拾光工具箱</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/tool.css">
+  <style>
+    .color-preview {
+      width: 100%;
+      height: 120px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .color-picker-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .color-picker-wrap input[type="color"] {
+      width: 60px;
+      height: 40px;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .color-inputs {
+      display: grid;
+      gap: 16px;
+    }
+    .color-input-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .color-input-row label {
+      width: 60px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .color-input-row input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container">
+      <div class="nav-content">
+        <a href="/" class="logo">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M20.083 15.2l1.202.721a.5.5 0 0 1 0 .858l-8.77 5.262a1 1 0 0 1-1.03 0l-8.77-5.262a.5.5 0 0 1 0-.858l1.202-.721L12 20.05l8.083-4.85zm0-4.7l1.202.721a.5.5 0 0 1 0 .858L12 17.65l-9.285-5.571a.5.5 0 0 1 0-.858l1.202-.721L12 15.35l8.083-4.85zm-7.569-9.191l8.771 5.262a.5.5 0 0 1 0 .858L12 13 2.715 7.429a.5.5 0 0 1 0-.858l8.77-5.262a1 1 0 0 1 1.03 0z"/></svg>
+          <span>拾光工具箱</span>
+        </a>
+        <button id="themeToggle" class="theme-btn">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7z"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="tool-container">
+    <div class="tool-header">
+      <h1>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2c5.522 0 10 3.978 10 8.889a5.558 5.558 0 0 1-5.556 5.555h-1.966c-.922 0-1.667.745-1.667 1.667 0 .422.167.811.422 1.1.267.3.434.689.434 1.122C13.667 21.256 12.9 22 12 22 6.478 22 2 17.522 2 12S6.478 2 12 2z"/></svg>
+        颜色转换器
+      </h1>
+      <p>HEX、RGB、HSL 颜色格式互相转换</p>
+    </div>
+
+    <div class="tool-card">
+      <div class="color-preview" id="preview" style="background:#3b82f6">
+        <span id="previewText" style="color:#fff">#3B82F6</span>
+      </div>
+      
+      <div class="color-picker-wrap">
+        <input type="color" id="picker" value="#3b82f6" oninput="fromPicker()">
+        <span>点击选择颜色</span>
+      </div>
+
+      <div class="color-inputs">
+        <div class="color-input-row">
+          <label>HEX</label>
+          <input type="text" id="hex" value="#3B82F6" oninput="fromHex()">
+          <button class="btn-sm" onclick="copy('hex')">复制</button>
+        </div>
+        <div class="color-input-row">
+          <label>RGB</label>
+          <input type="text" id="rgb" value="rgb(59, 130, 246)" oninput="fromRgb()">
+          <button class="btn-sm" onclick="copy('rgb')">复制</button>
+        </div>
+        <div class="color-input-row">
+          <label>HSL</label>
+          <input type="text" id="hsl" value="hsl(217, 91%, 60%)" oninput="fromHsl()">
+          <button class="btn-sm" onclick="copy('hsl')">复制</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script>
+    let currentColor = { r: 59, g: 130, b: 246 };
+
+    function fromPicker() {
+      const hex = document.getElementById('picker').value;
+      currentColor = hexToRgb(hex);
+      updateAll();
+    }
+
+    function fromHex() {
+      const hex = document.getElementById('hex').value.trim();
+      const rgb = hexToRgb(hex);
+      if (rgb) {
+        currentColor = rgb;
+        updateAll();
+      }
+    }
+
+    function fromRgb() {
+      const str = document.getElementById('rgb').value;
+      const match = str.match(/rgba?\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
+      if (match) {
+        currentColor = { r: +match[1], g: +match[2], b: +match[3] };
+        updateAll();
+      }
+    }
+
+    function fromHsl() {
+      const str = document.getElementById('hsl').value;
+      const match = str.match(/hsla?\s*\(\s*(\d+)\s*,\s*(\d+)%?\s*,\s*(\d+)%?/i);
+      if (match) {
+        currentColor = hslToRgb(+match[1], +match[2], +match[3]);
+        updateAll();
+      }
+    }
+
+    function updateAll() {
+      const { r, g, b } = currentColor;
+      const hex = rgbToHex(r, g, b);
+      const hsl = rgbToHsl(r, g, b);
+      
+      document.getElementById('picker').value = hex;
+      document.getElementById('hex').value = hex.toUpperCase();
+      document.getElementById('rgb').value = `rgb(${r}, ${g}, ${b})`;
+      document.getElementById('hsl').value = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+      
+      document.getElementById('preview').style.background = hex;
+      const textColor = (r * 0.299 + g * 0.587 + b * 0.114) > 150 ? '#000' : '#fff';
+      document.getElementById('previewText').style.color = textColor;
+      document.getElementById('previewText').textContent = hex.toUpperCase();
+    }
+
+    function hexToRgb(hex) {
+      hex = hex.replace(/^#/, '');
+      if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+      if (hex.length !== 6) return null;
+      return {
+        r: parseInt(hex.slice(0, 2), 16),
+        g: parseInt(hex.slice(2, 4), 16),
+        b: parseInt(hex.slice(4, 6), 16)
+      };
+    }
+
+    function rgbToHex(r, g, b) {
+      return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+    }
+
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+      if (max === min) {
+        h = s = 0;
+      } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+          case g: h = ((b - r) / d + 2) / 6; break;
+          case b: h = ((r - g) / d + 4) / 6; break;
+        }
+      }
+      return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+    }
+
+    function hslToRgb(h, s, l) {
+      h /= 360; s /= 100; l /= 100;
+      let r, g, b;
+      if (s === 0) {
+        r = g = b = l;
+      } else {
+        const hue2rgb = (p, q, t) => {
+          if (t < 0) t += 1;
+          if (t > 1) t -= 1;
+          if (t < 1/6) return p + (q - p) * 6 * t;
+          if (t < 1/2) return q;
+          if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+          return p;
+        };
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1/3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1/3);
+      }
+      return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
+    }
+
+    function copy(id) {
+      const value = document.getElementById(id).value;
+      navigator.clipboard.writeText(value);
+      showToast('已复制');
+    }
+
+    function showToast(msg) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+  </script>
+</body>
+</html>

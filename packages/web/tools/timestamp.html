@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时间戳转换 - 拾光工具箱</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/tool.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="container">
+      <div class="nav-content">
+        <a href="/" class="logo">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M20.083 15.2l1.202.721a.5.5 0 0 1 0 .858l-8.77 5.262a1 1 0 0 1-1.03 0l-8.77-5.262a.5.5 0 0 1 0-.858l1.202-.721L12 20.05l8.083-4.85zm0-4.7l1.202.721a.5.5 0 0 1 0 .858L12 17.65l-9.285-5.571a.5.5 0 0 1 0-.858l1.202-.721L12 15.35l8.083-4.85zm-7.569-9.191l8.771 5.262a.5.5 0 0 1 0 .858L12 13 2.715 7.429a.5.5 0 0 1 0-.858l8.77-5.262a1 1 0 0 1 1.03 0z"/></svg>
+          <span>拾光工具箱</span>
+        </a>
+        <button id="themeToggle" class="theme-btn">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7z"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="tool-container">
+    <div class="tool-header">
+      <h1>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-8h4v2h-6V7h2v5z"/></svg>
+        时间戳转换
+      </h1>
+      <p>时间戳与日期格式互相转换</p>
+    </div>
+
+    <!-- 当前时间 -->
+    <div class="tool-card">
+      <div class="card-header">当前时间</div>
+      <div class="current-time">
+        <div class="time-display" id="currentTime">--</div>
+        <div class="time-row">
+          <span class="time-label">秒级时间戳</span>
+          <span class="time-value" id="currentTimestamp">--</span>
+          <button class="btn-sm" onclick="copyText(document.getElementById('currentTimestamp').textContent)">复制</button>
+        </div>
+        <div class="time-row">
+          <span class="time-label">毫秒时间戳</span>
+          <span class="time-value" id="currentTimestampMs">--</span>
+          <button class="btn-sm" onclick="copyText(document.getElementById('currentTimestampMs').textContent)">复制</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 时间戳转日期 -->
+    <div class="tool-card">
+      <div class="card-header">时间戳 → 日期</div>
+      <div class="input-group">
+        <input type="text" id="timestampInput" placeholder="输入时间戳，如 1704067200 或 1704067200000">
+        <button class="btn btn-primary" onclick="timestampToDate()">转换</button>
+      </div>
+      <div class="result-box" id="timestampResult"></div>
+    </div>
+
+    <!-- 日期转时间戳 -->
+    <div class="tool-card">
+      <div class="card-header">日期 → 时间戳</div>
+      <div class="input-group">
+        <input type="datetime-local" id="dateInput" step="1">
+        <button class="btn btn-primary" onclick="dateToTimestamp()">转换</button>
+        <button class="btn" onclick="setNow()">现在</button>
+      </div>
+      <div class="result-box" id="dateResult"></div>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script>
+    // 更新当前时间
+    function updateCurrentTime() {
+      const now = new Date();
+      document.getElementById('currentTime').textContent = now.toLocaleString('zh-CN', {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false
+      });
+      document.getElementById('currentTimestamp').textContent = Math.floor(now.getTime() / 1000);
+      document.getElementById('currentTimestampMs').textContent = now.getTime();
+    }
+    
+    updateCurrentTime();
+    setInterval(updateCurrentTime, 1000);
+
+    // 时间戳转日期
+    function timestampToDate() {
+      const input = document.getElementById('timestampInput').value.trim();
+      const result = document.getElementById('timestampResult');
+      
+      if (!input) {
+        result.innerHTML = '<span class="error">请输入时间戳</span>';
+        return;
+      }
+      
+      let ts = parseInt(input);
+      if (isNaN(ts)) {
+        result.innerHTML = '<span class="error">无效的时间戳</span>';
+        return;
+      }
+      
+      // 自动识别秒/毫秒
+      if (ts < 1e12) ts *= 1000;
+      
+      const date = new Date(ts);
+      if (isNaN(date.getTime())) {
+        result.innerHTML = '<span class="error">无效的时间戳</span>';
+        return;
+      }
+      
+      result.innerHTML = `
+        <div class="result-row"><span>本地时间</span><strong>${date.toLocaleString('zh-CN')}</strong></div>
+        <div class="result-row"><span>ISO 格式</span><strong>${date.toISOString()}</strong></div>
+        <div class="result-row"><span>UTC 时间</span><strong>${date.toUTCString()}</strong></div>
+      `;
+    }
+
+    // 日期转时间戳
+    function dateToTimestamp() {
+      const input = document.getElementById('dateInput').value;
+      const result = document.getElementById('dateResult');
+      
+      if (!input) {
+        result.innerHTML = '<span class="error">请选择日期时间</span>';
+        return;
+      }
+      
+      const date = new Date(input);
+      const ts = Math.floor(date.getTime() / 1000);
+      const tsMs = date.getTime();
+      
+      result.innerHTML = `
+        <div class="result-row"><span>秒级时间戳</span><strong>${ts}</strong><button class="btn-sm" onclick="copyText('${ts}')">复制</button></div>
+        <div class="result-row"><span>毫秒时间戳</span><strong>${tsMs}</strong><button class="btn-sm" onclick="copyText('${tsMs}')">复制</button></div>
+      `;
+    }
+
+    // 设置当前时间
+    function setNow() {
+      const now = new Date();
+      const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+      document.getElementById('dateInput').value = local.toISOString().slice(0, 19);
+      dateToTimestamp();
+    }
+
+    // 复制文本
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('已复制');
+      });
+    }
+
+    // 提示
+    function showToast(msg) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+
+    // 初始化日期输入框
+    setNow();
+  </script>
+</body>
+</html>

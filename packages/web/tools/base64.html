@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 编解码 - 拾光工具箱</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/tool.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="container">
+      <div class="nav-content">
+        <a href="/" class="logo">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M20.083 15.2l1.202.721a.5.5 0 0 1 0 .858l-8.77 5.262a1 1 0 0 1-1.03 0l-8.77-5.262a.5.5 0 0 1 0-.858l1.202-.721L12 20.05l8.083-4.85zm0-4.7l1.202.721a.5.5 0 0 1 0 .858L12 17.65l-9.285-5.571a.5.5 0 0 1 0-.858l1.202-.721L12 15.35l8.083-4.85zm-7.569-9.191l8.771 5.262a.5.5 0 0 1 0 .858L12 13 2.715 7.429a.5.5 0 0 1 0-.858l8.77-5.262a1 1 0 0 1 1.03 0z"/></svg>
+          <span>拾光工具箱</span>
+        </a>
+        <button id="themeToggle" class="theme-btn">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7z"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="tool-container">
+    <div class="tool-header">
+      <h1>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M18 8h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2V7a6 6 0 1 1 12 0v1zm-2 0V7a4 4 0 1 0-8 0v1h8zm-5 6v2h2v-2h-2zm-4 0v2h2v-2H7zm8 0v2h2v-2h-2z"/></svg>
+        Base64 编解码
+      </h1>
+      <p>文本与 Base64 格式互相转换</p>
+    </div>
+
+    <div class="tool-card">
+      <div class="card-header">
+        <span>输入</span>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="encode()">编码 →</button>
+          <button class="btn btn-primary" onclick="decode()">← 解码</button>
+        </div>
+      </div>
+      <textarea id="input" class="code-input" placeholder="输入要编码或解码的文本"></textarea>
+    </div>
+
+    <div class="tool-card">
+      <div class="card-header">
+        <span>结果</span>
+        <div class="btn-group">
+          <button class="btn" onclick="copyResult()">复制</button>
+          <button class="btn" onclick="swap()">交换</button>
+          <button class="btn" onclick="clearAll()">清空</button>
+        </div>
+      </div>
+      <textarea id="output" class="code-input" readonly placeholder="结果将显示在这里"></textarea>
+    </div>
+
+    <div id="error" class="error-box"></div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script>
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    const error = document.getElementById('error');
+
+    function encode() {
+      error.textContent = '';
+      try {
+        const text = input.value;
+        if (!text) return;
+        // 支持中文
+        const encoded = btoa(unescape(encodeURIComponent(text)));
+        output.value = encoded;
+      } catch (e) {
+        error.textContent = '编码失败：' + e.message;
+      }
+    }
+
+    function decode() {
+      error.textContent = '';
+      try {
+        const text = input.value.trim();
+        if (!text) return;
+        // 支持中文
+        const decoded = decodeURIComponent(escape(atob(text)));
+        output.value = decoded;
+      } catch (e) {
+        error.textContent = '解码失败：无效的 Base64 字符串';
+      }
+    }
+
+    function copyResult() {
+      if (!output.value) return;
+      navigator.clipboard.writeText(output.value);
+      showToast('已复制');
+    }
+
+    function swap() {
+      const temp = input.value;
+      input.value = output.value;
+      output.value = temp;
+    }
+
+    function clearAll() {
+      input.value = '';
+      output.value = '';
+      error.textContent = '';
+    }
+
+    function showToast(msg) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+  </script>
+</body>
+</html>
