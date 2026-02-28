@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 格式化 - 拾光工具箱</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .tool-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .tool-header {
+      margin-bottom: 24px;
+    }
+    
+    .tool-header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .tool-header .icon {
+      width: 26px;
+      height: 26px;
+      color: var(--accent);
+    }
+    
+    .tool-header p {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    
+    .tool-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+      color: white;
+    }
+    
+    .btn .icon {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .editor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .editor-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    
+    .editor-panel-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .editor-panel textarea {
+      width: 100%;
+      height: 400px;
+      padding: 16px;
+      border: none;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+    }
+    
+    .error-msg {
+      background: #fee;
+      border: 1px solid #fcc;
+      color: #c33;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    
+    .error-msg.show {
+      display: block;
+    }
+    
+    .stats {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+    }
+    
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .stat-item .icon {
+      width: 16px;
+      height: 16px;
+      color: var(--accent);
+    }
+    
+    .stat-label {
+      color: var(--text-secondary);
+    }
+    
+    .stat-value {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    @media (max-width: 900px) {
+      .editor-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <nav class="nav">
+    <div class="container">
+      <div class="nav-content">
+        <a href="/" class="logo">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M20.083 15.2l1.202.721a.5.5 0 0 1 0 .858l-8.77 5.262a1 1 0 0 1-1.03 0l-8.77-5.262a.5.5 0 0 1 0-.858l1.202-.721L12 20.05l8.083-4.85zm0-4.7l1.202.721a.5.5 0 0 1 0 .858L12 17.65l-9.285-5.571a.5.5 0 0 1 0-.858l1.202-.721L12 15.35l8.083-4.85zm-7.569-9.191l8.771 5.262a.5.5 0 0 1 0 .858L12 13 2.715 7.429a.5.5 0 0 1 0-.858l8.77-5.262a1 1 0 0 1 1.03 0z"/></svg>
+          <span>拾光工具箱</span>
+        </a>
+        <button id="themeToggle" class="theme-btn">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7z"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 工具页面 -->
+  <div class="tool-page">
+    <!-- 头部 -->
+    <div class="tool-header">
+      <h1>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 18v-3.7a1.5 1.5 0 0 0-1.5-1.5H2v-1.6h.5A1.5 1.5 0 0 0 4 9.7V6c0-1.1.9-2 2-2h3v2H6v4.2c0 .9-.6 1.6-1.4 1.8.8.2 1.4 1 1.4 1.8V18h3v2H6c-1.1 0-2-.9-2-2zm16 0v-3.7a1.5 1.5 0 0 1 1.5-1.5h.5v-1.6h-.5a1.5 1.5 0 0 1-1.5-1.5V6c0-1.1-.9-2-2-2h-3v2h3v4.2c0 .9.6 1.6 1.4 1.8-.8.2-1.4 1-1.4 1.8V18h-3v2h3c1.1 0 2-.9 2-2z"/></svg>
+        JSON 格式化
+      </h1>
+      <p>格式化、压缩、验证 JSON 数据，支持语法高亮</p>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="tool-actions">
+      <button class="btn btn-primary" onclick="formatJSON()">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2l9 4.5v9L12 20l-9-4.5v-9L12 2zm0 2.311L6.213 6.5 12 8.689 17.787 6.5 12 4.311zM5 8.155v6.536L11 17.845v-6.536L5 8.155zm14 0l-6 3.154v6.536l6-3.154V8.155z"/></svg>
+        格式化
+      </button>
+      <button class="btn" onclick="compressJSON()">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-7v-4H8l4-5 4 5h-3v4h-2z"/></svg>
+        压缩
+      </button>
+      <button class="btn" onclick="validateJSON()">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"/></svg>
+        验证
+      </button>
+      <button class="btn" onclick="clearAll()">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/></svg>
+        清空
+      </button>
+      <button class="btn" onclick="copyOutput()">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.006-1H7zM5.002 8L5 20h10V8H5.002zM9 6h8v10h2V4H9v2z"/></svg>
+        复制结果
+      </button>
+    </div>
+
+    <!-- 错误提示 -->
+    <div id="errorMsg" class="error-msg"></div>
+
+    <!-- 编辑器 -->
+    <div class="editor-grid">
+      <div class="editor-panel">
+        <div class="editor-panel-header">输入 JSON</div>
+        <textarea id="inputJSON" placeholder='粘贴或输入 JSON 数据，例如：{"name":"拾光","version":"1.0"}'></textarea>
+      </div>
+      <div class="editor-panel">
+        <div class="editor-panel-header">格式化结果</div>
+        <textarea id="outputJSON" readonly placeholder="格式化后的 JSON 将在这里显示"></textarea>
+      </div>
+    </div>
+
+    <!-- 统计信息 -->
+    <div class="stats">
+      <div class="stat-item">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M13 10h5l-6 6-6-6h5V3h2v7zm-9 9h16v-7h2v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-8h2v7z"/></svg>
+        <span class="stat-label">原始大小：</span>
+        <span class="stat-value" id="inputSize">0 字节</span>
+      </div>
+      <div class="stat-item">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></svg>
+        <span class="stat-label">格式化后：</span>
+        <span class="stat-value" id="outputSize">0 字节</span>
+      </div>
+      <div class="stat-item">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-11v6h2v-6h-2zm0-4v2h2V7h-2z"/></svg>
+        <span class="stat-label">状态：</span>
+        <span class="stat-value" id="status">等待输入</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script>
+    const inputArea = document.getElementById('inputJSON');
+    const outputArea = document.getElementById('outputJSON');
+    const errorMsg = document.getElementById('errorMsg');
+    const inputSize = document.getElementById('inputSize');
+    const outputSize = document.getElementById('outputSize');
+    const status = document.getElementById('status');
+
+    // 格式化 JSON
+    function formatJSON() {
+      try {
+        const input = inputArea.value.trim();
+        if (!input) {
+          showError('请输入 JSON 数据');
+          return;
+        }
+        
+        const parsed = JSON.parse(input);
+        const formatted = JSON.stringify(parsed, null, 2);
+        outputArea.value = formatted;
+        
+        hideError();
+        updateStats(input, formatted, '格式化成功');
+      } catch (e) {
+        showError('JSON 格式错误：' + e.message);
+        status.textContent = '格式错误';
+      }
+    }
+
+    // 压缩 JSON
+    function compressJSON() {
+      try {
+        const input = inputArea.value.trim();
+        if (!input) {
+          showError('请输入 JSON 数据');
+          return;
+        }
+        
+        const parsed = JSON.parse(input);
+        const compressed = JSON.stringify(parsed);
+        outputArea.value = compressed;
+        
+        hideError();
+        updateStats(input, compressed, '压缩成功');
+      } catch (e) {
+        showError('JSON 格式错误：' + e.message);
+        status.textContent = '格式错误';
+      }
+    }
+
+    // 验证 JSON
+    function validateJSON() {
+      try {
+        const input = inputArea.value.trim();
+        if (!input) {
+          showError('请输入 JSON 数据');
+          return;
+        }
+        
+        JSON.parse(input);
+        hideError();
+        status.textContent = '✓ JSON 格式正确';
+        status.style.color = '#10b981';
+      } catch (e) {
+        showError('JSON 格式错误：' + e.message);
+        status.textContent = '✗ JSON 格式错误';
+        status.style.color = '#ef4444';
+      }
+    }
+
+    // 清空
+    function clearAll() {
+      inputArea.value = '';
+      outputArea.value = '';
+      hideError();
+      inputSize.textContent = '0 字节';
+      outputSize.textContent = '0 字节';
+      status.textContent = '等待输入';
+      status.style.color = '';
+    }
+
+    // 复制结果
+    function copyOutput() {
+      const output = outputArea.value;
+      if (!output) {
+        showError('没有可复制的内容');
+        return;
+      }
+      
+      navigator.clipboard.writeText(output).then(() => {
+        status.textContent = '✓ 已复制到剪贴板';
+        status.style.color = '#10b981';
+        setTimeout(() => {
+          status.textContent = '格式化成功';
+          status.style.color = '';
+        }, 2000);
+      }).catch(() => {
+        // 降级方案
+        outputArea.select();
+        document.execCommand('copy');
+        status.textContent = '✓ 已复制';
+      });
+    }
+
+    // 显示错误
+    function showError(msg) {
+      errorMsg.textContent = msg;
+      errorMsg.classList.add('show');
+    }
+
+    // 隐藏错误
+    function hideError() {
+      errorMsg.classList.remove('show');
+    }
+
+    // 更新统计
+    function updateStats(input, output, statusText) {
+      inputSize.textContent = formatBytes(new Blob([input]).size);
+      outputSize.textContent = formatBytes(new Blob([output]).size);
+      status.textContent = statusText;
+      status.style.color = '#10b981';
+    }
+
+    // 格式化字节
+    function formatBytes(bytes) {
+      if (bytes === 0) return '0 字节';
+      const k = 1024;
+      const sizes = ['字节', 'KB', 'MB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return (bytes / Math.pow(k, i)).toFixed(1) + ' ' + sizes[i];
+    }
+
+    // 输入时自动更新统计
+    inputArea.addEventListener('input', () => {
+      const input = inputArea.value;
+      inputSize.textContent = formatBytes(new Blob([input]).size);
+      if (!input) {
+        outputArea.value = '';
+        outputSize.textContent = '0 字节';
+        status.textContent = '等待输入';
+        hideError();
+      }
+    });
+
+    // 快捷键支持
+    inputArea.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          formatJSON();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
