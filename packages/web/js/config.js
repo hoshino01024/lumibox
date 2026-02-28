@@ -2,6 +2,7 @@
 function initTheme() {
   const theme = localStorage.getItem('theme') || 'light';
   document.documentElement.setAttribute('data-theme', theme);
+  updateThemeIcon(theme);
 }
 
 function toggleTheme() {
@@ -10,6 +11,14 @@ function toggleTheme() {
   const next = current === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
   localStorage.setItem('theme', next);
+  updateThemeIcon(next);
+}
+
+function updateThemeIcon(theme) {
+  const icon = document.querySelector('#themeToggle i');
+  if (icon) {
+    icon.className = theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line';
+  }
 }
 
 // 搜索
@@ -21,7 +30,7 @@ function initSearch() {
     const keyword = e.target.value.toLowerCase();
     document.querySelectorAll('.tool-card').forEach(card => {
       const text = card.textContent.toLowerCase();
-      card.style.display = text.includes(keyword) ? 'block' : 'none';
+      card.style.display = text.includes(keyword) ? 'flex' : 'none';
     });
   });
 }

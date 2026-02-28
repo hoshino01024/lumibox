@@ -391,3 +391,48 @@ body {
     height: 30px;
   }
 }
+
+/* RemixIcon 图标样式 */
+.category-icon {
+  font-size: 36px;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.tool-icon {
+  font-size: 28px;
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.section-title i {
+  font-size: 22px;
+}
+
+.logo i {
+  font-size: 26px;
+  color: var(--accent);
+}
+
+.hero-title i {
+  font-size: 32px;
+}
+
+.search-box i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--text-secondary);
+}
+
+.theme-btn i {
+  font-size: 20px;
+}
+
+.close-btn i {
+  font-size: 16px;
+}
