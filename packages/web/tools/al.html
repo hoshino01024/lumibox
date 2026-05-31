@@ -2,250 +2,182 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>AL 加解密工具</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>AL解密工具</title>
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         body {
-            background: #1a1a2e;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+            background: #000;
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        .container {
-            max-width: 900px;
-            width: 100%;
-            background: #16213e;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .box {
+            max-width: 600px;
+            margin: 0 auto;
         }
         h1 {
-            color: #e94560;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
             text-align: center;
-            margin-bottom: 10px;
-            font-size: 1.8rem;
-        }
-        .sub {
-            text-align: center;
-            color: #888;
-            margin-bottom: 30px;
-            font-size: 0.85rem;
         }
         textarea {
             width: 100%;
-            padding: 15px;
-            font-size: 14px;
-            font-family: 'Monaco', 'Courier New', monospace;
-            background: #0f3460;
-            border: 1px solid #e94560;
+            background: #1a1a1a;
+            border: 1px solid #333;
             border-radius: 12px;
-            color: #eee;
-            resize: vertical;
-            outline: none;
-        }
-        textarea:focus {
-            border-color: #ff6b81;
-            box-shadow: 0 0 5px rgba(233,69,96,0.5);
-        }
-        .label {
-            color: #ddd;
-            margin: 15px 0 8px 0;
-            font-weight: bold;
-        }
-        .output-area {
-            background: #0f3460;
-            border-radius: 12px;
-            padding: 15px;
-            min-height: 150px;
+            padding: 14px;
             color: #0f0;
             font-family: 'Monaco', 'Courier New', monospace;
             font-size: 13px;
-            white-space: pre-wrap;
+            resize: vertical;
+            outline: none;
+            box-sizing: border-box;
+        }
+        textarea:focus {
+            border-color: #007aff;
+        }
+        .output {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 16px;
+            color: #0f0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
             word-break: break-all;
-            border: 1px solid #2c3e66;
-            margin-top: 5px;
+            white-space: pre-wrap;
         }
         .error {
-            color: #ff6b6b;
+            color: #ff4444;
+        }
+        .btn {
+            background: #007aff;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 16px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        .btn:active {
+            opacity: 0.7;
         }
         .footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 12px;
             color: #666;
-        }
-        button {
-            background: #e94560;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
-            transition: 0.2s;
-        }
-        button:hover {
-            background: #ff6b81;
-        }
-        .flex {
-            display: flex;
-            gap: 10px;
-            align-items: center;
+            font-size: 11px;
+            text-align: center;
+            margin-top: 16px;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>🔐 AL 加解密工具</h1>
-    <div class="sub">RC4 + Base64 | 密钥: z5916383ef21f0649b0957249</div>
-
-    <div class="label">📥 输入 (支持完整JSON或直接Base64)</div>
-    <textarea id="inputText" rows="4" placeholder='示例1: {"encrypted_data":"M2RmY2NiYjZh..."}&#10;示例2: M2RmY2NiYjZh...'></textarea>
-    
-    <div class="flex" style="justify-content: space-between; margin-top: 10px;">
-        <div class="label">📤 输出结果 (自动解密/加密)</div>
-        <button id="clearBtn">清空</button>
-    </div>
-    <div id="output" class="output-area">等待输入...</div>
-    <div class="footer">💡 自动识别输入格式：直接粘贴完整的JSON或Base64字符串即可</div>
+<div class="box">
+    <h1>🔓 AL 解密工具</h1>
+    <textarea id="input" rows="4" placeholder="粘贴 encrypted_data 值或完整JSON"></textarea>
+    <div class="btn" id="decryptBtn">解密</div>
+    <div class="output" id="output"></div>
+    <div class="footer">密钥: z5916383ef21f0649b0957249</div>
 </div>
 
 <script>
-    const KEY = "z5916383ef21f0649b0957249";
+const KEY = "z5916383ef21f0649b0957249";
 
-    // RC4 加解密
-    function rc4(data, key) {
-        let s = [];
-        for (let i = 0; i < 256; i++) s[i] = i;
-        let j = 0;
-        for (let i = 0; i < 256; i++) {
-            j = (j + s[i] + key.charCodeAt(i % key.length)) % 256;
-            [s[i], s[j]] = [s[j], s[i]];
-        }
-        let i = 0;
-        j = 0;
-        let out = [];
-        for (let k = 0; k < data.length; k++) {
-            i = (i + 1) % 256;
-            j = (j + s[i]) % 256;
-            [s[i], s[j]] = [s[j], s[i]];
-            out.push(data[k] ^ s[(s[i] + s[j]) % 256]);
-        }
-        return out;
+function rc4(data, key) {
+    let s = [];
+    for (let i = 0; i < 256; i++) s[i] = i;
+    let j = 0;
+    for (let i = 0; i < 256; i++) {
+        j = (j + s[i] + key.charCodeAt(i % key.length)) % 256;
+        [s[i], s[j]] = [s[j], s[i]];
     }
-
-    // 解密
-    function decrypt(encryptedB64) {
-        // Base64 解码
-        let binaryStr = atob(encryptedB64);
-        let bytes = [];
-        for (let i = 0; i < binaryStr.length; i++) {
-            bytes.push(binaryStr.charCodeAt(i));
-        }
-        // 转为十六进制字符串
-        let hexStr = "";
-        for (let i = 0; i < bytes.length; i++) {
-            hexStr += bytes[i].toString(16).padStart(2, '0');
-        }
-        // 十六进制转字节数组
-        let step3 = [];
-        for (let i = 0; i < hexStr.length; i += 2) {
-            step3.push(parseInt(hexStr.substr(i, 2), 16));
-        }
-        // RC4 解密
-        let decrypted = rc4(step3, KEY);
-        // 转字符串
-        let result = "";
-        for (let i = 0; i < decrypted.length; i++) {
-            result += String.fromCharCode(decrypted[i]);
-        }
-        return JSON.parse(result);
+    let i = 0;
+    j = 0;
+    let out = [];
+    for (let k = 0; k < data.length; k++) {
+        i = (i + 1) % 256;
+        j = (j + s[i]) % 256;
+        [s[i], s[j]] = [s[j], s[i]];
+        out.push(data[k] ^ s[(s[i] + s[j]) % 256]);
     }
+    return out;
+}
 
-    // 加密
-    function encrypt(dataObj) {
-        let jsonStr = JSON.stringify(dataObj);
-        let bytes = [];
-        for (let i = 0; i < jsonStr.length; i++) {
-            bytes.push(jsonStr.charCodeAt(i));
-        }
-        let encrypted = rc4(bytes, KEY);
-        // 转十六进制
-        let hexStr = "";
-        for (let i = 0; i < encrypted.length; i++) {
-            hexStr += encrypted[i].toString(16).padStart(2, '0');
-        }
-        // 十六进制字符串转 Base64
-        let base64 = btoa(hexStr);
-        return JSON.stringify({ "encrypted_data": base64 }, null, 2);
+function base64Decode(str) {
+    try {
+        return atob(str);
+    } catch(e) {
+        return null;
     }
+}
 
-    // 自动处理输入
-    function processInput(rawInput) {
-        let input = rawInput.trim();
-        if (!input) return "";
-
-        // 尝试提取 encrypted_data 的值
-        let match = input.match(/"encrypted_data"\s*:\s*"([^"]+)"/);
-        let b64Data = match ? match[1] : input;
-
-        // 检查是否是有效的 Base64 (粗略判断)
-        if (!/^[A-Za-z0-9+/=]+$/.test(b64Data)) {
-            return "❌ 无效的 Base64 格式";
-        }
-
-        try {
-            let result = decrypt(b64Data);
-            return JSON.stringify(result, null, 2);
-        } catch(e) {
-            // 解密失败，尝试加密
-            try {
-                let data = JSON.parse(input);
-                let encrypted = encrypt(data);
-                return encrypted;
-            } catch(e2) {
-                return "❌ 解密/加密失败: " + e.message;
-            }
-        }
+function hexToBytes(hex) {
+    let bytes = [];
+    for (let i = 0; i < hex.length; i += 2) {
+        bytes.push(parseInt(hex.substr(i, 2), 16));
     }
+    return bytes;
+}
 
-    // 实时处理
-    const inputArea = document.getElementById('inputText');
-    const outputDiv = document.getElementById('output');
-
-    function update() {
-        let raw = inputArea.value;
-        if (!raw.trim()) {
-            outputDiv.innerHTML = "等待输入...";
-            outputDiv.classList.remove('error');
-            return;
-        }
-        let result = processInput(raw);
-        if (result.startsWith("❌")) {
-            outputDiv.classList.add('error');
-        } else {
-            outputDiv.classList.remove('error');
-        }
-        outputDiv.innerHTML = result;
+function decrypt(b64) {
+    let binary = base64Decode(b64);
+    if (!binary) return null;
+    
+    let bytes = [];
+    for (let i = 0; i < binary.length; i++) {
+        bytes.push(binary.charCodeAt(i));
     }
+    
+    let hexStr = "";
+    for (let i = 0; i < bytes.length; i++) {
+        hexStr += bytes[i].toString(16).padStart(2, '0');
+    }
+    
+    let encrypted = hexToBytes(hexStr);
+    let decrypted = rc4(encrypted, KEY);
+    
+    let result = "";
+    for (let i = 0; i < decrypted.length; i++) {
+        result += String.fromCharCode(decrypted[i]);
+    }
+    
+    return JSON.parse(result);
+}
 
-    inputArea.addEventListener('input', update);
-
-    document.getElementById('clearBtn').addEventListener('click', () => {
-        inputArea.value = "";
-        outputDiv.innerHTML = "等待输入...";
-        outputDiv.classList.remove('error');
-    });
-
-    // 初始化
-    update();
+document.getElementById('decryptBtn').onclick = function() {
+    let input = document.getElementById('input').value.trim();
+    let output = document.getElementById('output');
+    
+    if (!input) {
+        output.innerHTML = '请输入数据';
+        output.classList.add('error');
+        return;
+    }
+    
+    // 提取 encrypted_data 的值
+    let match = input.match(/"encrypted_data"\s*:\s*"([^"]+)"/);
+    let b64 = match ? match[1] : input;
+    
+    try {
+        let result = decrypt(b64);
+        output.innerHTML = JSON.stringify(result, null, 2);
+        output.classList.remove('error');
+    } catch(e) {
+        output.innerHTML = '解密失败: ' + e.message;
+        output.classList.add('error');
+    }
+};
 </script>
 </body>
 </html>
